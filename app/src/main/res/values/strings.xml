@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Moving On</string>
+    <string name="modoLogin">Logar como:</string>
+    <string name="btnCliente">Cliente</string>
+    <string name="btnEmpresa">Empresa/Personal Trainer</string>
+    <string name="login">Login:</string>
+    <string name="empresa">Empresa</string>
+    <string name="cliente">Cliente</string>
+    <string name="txtEmail">Coloque seu email:</string>
+    <string name="txtPassword">Coloque sua senha:</string>
+    <string name="txtConfirmPassword">Confirme sua senha:</string>
+    <string name="txtConfirmEmail">Confirme seu email:</string>
+    <string name="txtNome">Coloque seu nome:</string>
+    <string name="txtEndereco">Endereço:</string>
+    <string name="txtUf">UF:</string>
+    <string name="txtCep">CEP:</string>
+    <string name="btnLogin">Entrar</string>
+    <string name="btnRegistrar">Registrar</string>
+</resources>
