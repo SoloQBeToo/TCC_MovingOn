@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.movingonteste.Initial
-import com.example.movingonteste.R
-import com.example.movingonteste.cliente.RegisterCliente
 import com.example.movingonteste.databinding.ActivityLoginEmpresaBinding
-import com.example.movingonteste.telas.Interface
+import com.example.movingonteste.telasCliente.InterfaceCliente
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -30,11 +28,11 @@ class LoginEmpresa : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        binding.btnRegistrar.setOnClickListener {
+        /*binding.btnRegistrar.setOnClickListener {
             val intent = Intent(applicationContext, RegisterEmpresa::class.java)
             startActivity(intent)
             finish()
-        }
+        }*/
         binding.backImg.setOnClickListener {
             val intent = Intent(applicationContext, Initial::class.java)
             startActivity(intent)
@@ -63,7 +61,7 @@ class LoginEmpresa : AppCompatActivity() {
                             binding.txtPassword.setText("")
 
                             databaseReference = FirebaseDatabase.getInstance().getReference("Empresas")
-                            val intent = Intent(applicationContext, Interface::class.java)
+                            val intent = Intent(applicationContext, InterfaceCliente::class.java)
                             startActivity(intent)
                             finish()
                         }else{

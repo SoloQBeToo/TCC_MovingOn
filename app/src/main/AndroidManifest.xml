@@ -22,7 +22,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".telas.Interface"
+            android:name=".telasCliente.InterfaceCliente"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

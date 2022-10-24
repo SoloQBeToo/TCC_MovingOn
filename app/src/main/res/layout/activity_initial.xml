@@ -64,7 +64,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:padding="8dp"
-            android:text="@string/modoLogin"
+            android:text="@string/entrar"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@color/material_dynamic_neutral95"

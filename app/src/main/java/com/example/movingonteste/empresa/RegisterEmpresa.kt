@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
-import com.example.movingonteste.R
-import com.example.movingonteste.cliente.LoginClient
+import com.example.movingonteste.Initial
 import com.example.movingonteste.databinding.ActivityRegisterEmpresaBinding
-import com.example.movingonteste.telas.Interface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -29,15 +27,16 @@ class RegisterEmpresa : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         binding.backImg.setOnClickListener {
-            val intent = Intent(applicationContext, LoginEmpresa::class.java)
+            val intent = Intent(applicationContext, Initial::class.java)
             startActivity(intent)
             finish()
         }
         binding.txtBack.setOnClickListener {
-            val intent = Intent(applicationContext, LoginEmpresa::class.java)
+            val intent = Intent(applicationContext, Initial::class.java)
             startActivity(intent)
             finish()
         }
+
 
         binding.btnRegistrar.setOnClickListener {
             val nome = binding.txtNome.text.toString()
@@ -97,6 +96,11 @@ class RegisterEmpresa : AppCompatActivity() {
                 registerEmpresa(nome, email, senha)
             }
         }
+        binding.goLogin.setOnClickListener {
+            val intent = Intent(applicationContext, LoginEmpresa::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
     private fun registerEmpresa(nome:String,email:String,senha:String){
@@ -115,7 +119,7 @@ class RegisterEmpresa : AppCompatActivity() {
 
                     databaseReference.setValue(hashMap).addOnCompleteListener(this) {
                         if(it.isSuccessful){
-                            val intent = Intent(applicationContext, Interface::class.java)
+                            val intent = Intent(applicationContext, LoginEmpresa::class.java)
                             startActivity(intent)
                             finish()
                         }

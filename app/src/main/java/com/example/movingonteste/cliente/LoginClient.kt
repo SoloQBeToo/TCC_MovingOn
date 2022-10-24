@@ -5,14 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
-import com.example.movingonteste.Initial
 import com.example.movingonteste.databinding.ActivityLoginClienteBinding
-import com.example.movingonteste.telas.Interface
+import com.example.movingonteste.telasCliente.InterfaceCliente
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.childEvents
-import com.google.firebase.database.ktx.snapshots
 
 class LoginClient : AppCompatActivity() {
 
@@ -30,20 +26,20 @@ class LoginClient : AppCompatActivity() {
         setContentView(view)
 
         auth = FirebaseAuth.getInstance()
-        databaseReference = FirebaseDatabase.getInstance().getReference("Clientes")
 
-        binding.btnRegistrar.setOnClickListener {
+
+        /*binding.btnRegistrar.setOnClickListener {
+            val intent = Intent(applicationContext, RegisterCliente::class.java)
+            startActivity(intent)
+            finish()
+        }*/
+        binding.backImg.setOnClickListener {
             val intent = Intent(applicationContext, RegisterCliente::class.java)
             startActivity(intent)
             finish()
         }
-        binding.backImg.setOnClickListener {
-            val intent = Intent(applicationContext, Initial::class.java)
-            startActivity(intent)
-            finish()
-        }
         binding.txtBack.setOnClickListener {
-            val intent = Intent(applicationContext, Initial::class.java)
+            val intent = Intent(applicationContext, RegisterCliente::class.java)
             startActivity(intent)
             finish()
         }
@@ -65,7 +61,7 @@ class LoginClient : AppCompatActivity() {
 
 
 
-                            val intent = Intent(applicationContext, Interface::class.java)
+                            val intent = Intent(applicationContext, InterfaceCliente::class.java)
                             startActivity(intent)
                             finish()
                         }else{

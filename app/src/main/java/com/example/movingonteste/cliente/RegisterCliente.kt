@@ -5,14 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
-import com.example.movingonteste.R
+import com.example.movingonteste.Initial
 import com.example.movingonteste.databinding.ActivityRegisterClienteBinding
-import com.example.movingonteste.telas.Interface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 
 class RegisterCliente : AppCompatActivity() {
 
@@ -30,12 +28,12 @@ class RegisterCliente : AppCompatActivity() {
 
 
         binding.backImg.setOnClickListener {
-            val intent = Intent(applicationContext, LoginClient::class.java)
+            val intent = Intent(applicationContext, Initial::class.java)
             startActivity(intent)
             finish()
         }
         binding.txtBack.setOnClickListener {
-            val intent = Intent(applicationContext, LoginClient::class.java)
+            val intent = Intent(applicationContext, Initial::class.java)
             startActivity(intent)
             finish()
         }
@@ -87,6 +85,11 @@ class RegisterCliente : AppCompatActivity() {
                 registerCliente(nome, email, senha)
             }
         }
+        binding.goLogin.setOnClickListener {
+            val intent = Intent(applicationContext, LoginClient::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun registerCliente(nome:String,email:String,senha:String){
@@ -105,7 +108,7 @@ class RegisterCliente : AppCompatActivity() {
 
                     databaseReference.setValue(hashMap).addOnCompleteListener(this) {
                         if(it.isSuccessful){
-                            val intent = Intent(applicationContext, Interface::class.java)
+                            val intent = Intent(applicationContext, LoginClient::class.java)
                             startActivity(intent)
                             finish()
                         }

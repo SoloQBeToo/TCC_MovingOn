@@ -24,7 +24,7 @@
             android:id="@+id/txtBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tela Inicial"
+            android:text="Cadastro"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/material_dynamic_neutral20"
@@ -97,17 +97,7 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="30dp"
-                android:padding="5dp"
                 android:text="@string/btnLogin"/>
-
-            <Button
-                android:id="@+id/btnRegistrar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:paddingTop="5dp"
-                android:text="@string/btnRegistrar"/>
         </LinearLayout>
 
 
