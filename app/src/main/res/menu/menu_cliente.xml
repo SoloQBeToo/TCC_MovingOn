@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/cliente_home"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Tela Inicial" />
+        <item
+            android:id="@+id/cliente_calculadora"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Calculadora IAC" />
+        <item
+            android:id="@+id/cliente_mapa"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="Mapa" />
+        <item
+            android:id="@+id/cliente_cronograma"
+            android:icon="@drawable/ic_backimg"
+            android:title="Cronograma"
+            />
+    </group>
+</menu>
