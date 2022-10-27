@@ -8,15 +8,19 @@ import com.example.movingonteste.cliente.RegisterCliente
 import com.example.movingonteste.databinding.ActivityInitialBinding
 import com.example.movingonteste.empresa.LoginEmpresa
 import com.example.movingonteste.empresa.RegisterEmpresa
+import com.google.firebase.auth.FirebaseAuth
 
 class Initial : AppCompatActivity() {
         private lateinit var binding: ActivityInitialBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInitialBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
 
         binding.btnCliente.setOnClickListener {
             val intent = Intent(applicationContext, RegisterCliente::class.java)

@@ -8,7 +8,9 @@ import android.widget.Toast
 import com.example.movingonteste.Initial
 import com.example.movingonteste.databinding.ActivityLoginEmpresaBinding
 import com.example.movingonteste.telasCliente.InterfaceCliente
+import com.example.movingonteste.telasEmpresa.InterfaceEmpresa
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -18,6 +20,7 @@ class LoginEmpresa : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseUser: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +31,13 @@ class LoginEmpresa : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        /*binding.btnRegistrar.setOnClickListener {
-            val intent = Intent(applicationContext, RegisterEmpresa::class.java)
+
+        if(auth.currentUser != null){
+            val intent = Intent(applicationContext, InterfaceEmpresa::class.java)
             startActivity(intent)
             finish()
-        }*/
+        }
+
         binding.backImg.setOnClickListener {
             val intent = Intent(applicationContext, Initial::class.java)
             startActivity(intent)
@@ -60,8 +65,8 @@ class LoginEmpresa : AppCompatActivity() {
                             binding.txtEmail.setText("")
                             binding.txtPassword.setText("")
 
-                            databaseReference = FirebaseDatabase.getInstance().getReference("Empresas")
-                            val intent = Intent(applicationContext, InterfaceCliente::class.java)
+
+                            val intent = Intent(applicationContext, InterfaceEmpresa::class.java)
                             startActivity(intent)
                             finish()
                         }else{

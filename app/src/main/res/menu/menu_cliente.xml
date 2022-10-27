@@ -7,11 +7,11 @@
         <item
             android:id="@+id/cliente_home"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="Tela Inicial" />
+            android:title="Tela Inicial"/>
         <item
             android:id="@+id/cliente_calculadora"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="Calculadora IAC" />
+            android:title="Calculadora de IAC"/>
         <item
             android:id="@+id/cliente_mapa"
             android:icon="@drawable/ic_launcher_foreground"
@@ -19,7 +19,13 @@
         <item
             android:id="@+id/cliente_cronograma"
             android:icon="@drawable/ic_backimg"
-            android:title="Cronograma"
-            />
+            android:title="Cronograma"/>
     </group>
+
+        <item
+            android:id="@+id/quemSomos"
+            android:title="Quem somos?"/>
+
+
+
 </menu>

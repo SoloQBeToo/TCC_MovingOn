@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.example.movingonteste.Initial
 import com.example.movingonteste.databinding.ActivityRegisterClienteBinding
+import com.example.movingonteste.telasCliente.InterfaceCliente
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -17,6 +18,7 @@ class RegisterCliente : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterClienteBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseUser: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,14 @@ class RegisterCliente : AppCompatActivity() {
         setContentView(view)
 
         auth = FirebaseAuth.getInstance()
+
+
+        if(auth.currentUser != null) {
+            val intent = Intent(applicationContext, InterfaceCliente::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
 
         binding.backImg.setOnClickListener {
