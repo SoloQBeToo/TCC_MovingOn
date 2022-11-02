@@ -19,8 +19,7 @@ class LoginEmpresa : AppCompatActivity() {
     private lateinit var binding: ActivityLoginEmpresaBinding
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var firebaseUser: FirebaseUser
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

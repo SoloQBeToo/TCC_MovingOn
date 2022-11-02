@@ -17,7 +17,7 @@ class LoginClient : AppCompatActivity() {
     private lateinit var binding: ActivityLoginClienteBinding
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var firebaseUser: FirebaseUser
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

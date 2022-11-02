@@ -17,15 +17,28 @@
             android:icon="@drawable/ic_launcher_foreground"
             android:title="Mapa" />
         <item
+            android:id="@+id/cliente_chat"
+            android:title="Chat"
+            android:icon="@drawable/ic_user"/>
+        <item
             android:id="@+id/cliente_cronograma"
             android:icon="@drawable/ic_backimg"
             android:title="Cronograma"/>
+        <item
+            android:id="@+id/cliente_perfil"
+            android:icon="@drawable/ic_user"
+            android:title="Perfil"/>
     </group>
 
-        <item
-            android:id="@+id/quemSomos"
-            android:title="Quem somos?"/>
-
+        <item android:title="...">
+            <menu>
+                <item
+                    android:id="@+id/quemSomos"
+                    android:title="Quem Somos?"
+                    android:icon="@drawable/ic_interrogacao"
+                    />
+            </menu>
+        </item>
 
 
 </menu>

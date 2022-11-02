@@ -22,4 +22,8 @@
     <style name="Theme.Drawer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Drawer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.MovingOnTeste.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MovingOnTeste.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

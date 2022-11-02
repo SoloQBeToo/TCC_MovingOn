@@ -7,7 +7,9 @@
     android:layout_height="176dp"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:background="#3F88C3">
+    android:background="#3F88C3"
+    android:id="@+id/header"
+    tools:context=".telasCliente.InterfaceCliente">
     
     <ImageView
         android:id="@+id/logo"
@@ -19,25 +21,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/purple_500"
+        android:layout_marginStart="25dp"
         />
 
     <TextView
         android:id="@+id/header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/app_name"
         app:layout_constraintTop_toBottomOf="@id/logo"
         android:textSize="19sp"
         android:textStyle="bold"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"/>
     <TextView
         android:id="@+id/header_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/logado"
         app:layout_constraintTop_toBottomOf="@id/header_name"
         android:textSize="17sp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
         />
 
 </LinearLayout>

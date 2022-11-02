@@ -12,13 +12,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class RegisterCliente : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterClienteBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var firebaseUser: FirebaseUser
+    private lateinit var documentReference: DocumentReference
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +31,10 @@ class RegisterCliente : AppCompatActivity() {
         setContentView(view)
 
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
 
-        if(auth.currentUser != null) {
+        if (auth.currentUser != null) {
             val intent = Intent(applicationContext, InterfaceCliente::class.java)
             startActivity(intent)
             finish()
@@ -70,8 +75,12 @@ class RegisterCliente : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if(TextUtils.isEmpty(confirmEmail)){
-                Toast.makeText(applicationContext, "A confirmação de email não pode ser nula", Toast.LENGTH_SHORT).show()
+            if (TextUtils.isEmpty(confirmEmail)) {
+                Toast.makeText(
+                    applicationContext,
+                    "A confirmação de email não pode ser nula",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             if (TextUtils.isEmpty(senha)) {
                 Toast.makeText(
@@ -88,11 +97,12 @@ class RegisterCliente : AppCompatActivity() {
                 ).show()
             }
             if (!senha.equals(confirmSenha)) {
-                Toast.makeText(applicationContext,"Senhas devem ser iguais", Toast.LENGTH_SHORT).show()
-            } else if(!email.equals(confirmEmail)) {
+                Toast.makeText(applicationContext, "Senhas devem ser iguais", Toast.LENGTH_SHORT)
+                    .show()
+            } else if (!email.equals(confirmEmail)) {
                 Toast.makeText(applicationContext, "Emails não conferem", Toast.LENGTH_SHORT).show()
-            }else{
-                registerCliente(nome, email, senha)
+            } else {
+                registrarCliente(nome, email, senha)
             }
         }
         binding.goLogin.setOnClickListener {
@@ -102,7 +112,7 @@ class RegisterCliente : AppCompatActivity() {
         }
     }
 
-    private fun registerCliente(nome:String,email:String,senha:String){
+    /*private fun registerCliente(nome:String,email:String,senha:String){
         auth.createUserWithEmailAndPassword(email,senha)
                 .addOnCompleteListener(this) {
                 if(it.isSuccessful){
@@ -125,5 +135,29 @@ class RegisterCliente : AppCompatActivity() {
                     }
                 }
         }
+    }*/
+    private fun registrarCliente(nome: String, email: String, senha: String) {
+        auth.createUserWithEmailAndPassword(email, senha)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser?.uid
+                    documentReference = firestore.collection("Clientes").document(user.toString())
+                    val cliente = mutableMapOf<String, String>()
+
+                    cliente["nome"] = nome
+                    cliente["email"] = email
+
+
+                    documentReference.set(cliente).addOnCompleteListener(this) {
+                        if (it.isSuccessful) {
+                            val intent = Intent(applicationContext, LoginClient::class.java)
+                            startActivity(intent)
+                            finish()
+                        }else{
+                            Toast.makeText(applicationContext, "Erro ao registrar", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
     }
 }

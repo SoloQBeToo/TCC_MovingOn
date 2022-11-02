@@ -2,10 +2,13 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+   <!-- <item
+        android:id="@+id/telaChat"
+        android:title="Chat"
+        android:onClick="telaChat"/>-->
     <item
         android:id="@+id/btnSair"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_exit"
         android:onClick="onGroupItemClick"
         android:title="Desconectar" />
 </menu>
