@@ -119,7 +119,7 @@ fun CardItem(empresa: User) {
                 .padding(start = 10.dp, end = 10.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_empresa),
+                painter = painterResource(id = R.drawable.ic_person),
                 contentDescription = "Icon",
                 modifier = Modifier
                     .size(60.dp)

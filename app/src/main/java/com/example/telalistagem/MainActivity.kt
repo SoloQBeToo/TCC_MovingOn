@@ -88,7 +88,7 @@ fun InitialSceen() {
             Text(
                 text = "Entrar como:",
                 style = MaterialTheme.typography.h4,
-                color = Color(68, 66, 66, 255),
+                color = Color(101, 90, 194, 255),
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
