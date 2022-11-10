@@ -101,6 +101,7 @@ fun DrawerCliente(scope: CoroutineScope, scaffoldState: ScaffoldState, navContro
         NavDrawerItemCliente.Cronograma,
         NavDrawerItemCliente.Chat,
         NavDrawerItemCliente.Mapa,
+        NavDrawerItemCliente.Calculadora
     )
     Column(
         Modifier
@@ -185,6 +186,16 @@ fun NavigationCliente(navController: NavHostController){
         composable(NavDrawerItemCliente.Chat.route){
             ChatCliente(ViewModelCliente())
         }
+        composable(NavDrawerItemCliente.Calculadora.route){
+            CalculadoraCliente()
+        }
+        composable(NavDrawerItemCliente.Mapa.route){
+            MapaCliente()
+        }
+        composable(NavDrawerItemCliente.Cronograma.route){
+            CronogramaCliente()
+        }
+
     }
 }
 @Preview

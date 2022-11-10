@@ -35,6 +35,7 @@ import com.example.telalistagem.R
 
 
 import com.example.telalistagem.empresa.NavDrawerItemEmpresa
+import com.example.telalistagem.viewmodel.ViewModelEmpresa
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -173,10 +174,10 @@ fun DrawerItemEmpresa(item: NavDrawerItemEmpresa, selected: Boolean, onItemClick
 fun NavigationEmpresa(navController: NavHostController){
     NavHost(navController, startDestination = NavDrawerItemEmpresa.Home.route){
         composable(NavDrawerItemEmpresa.Home.route){
-            //
+            HomeEmpresa()
         }
         composable(NavDrawerItemEmpresa.Chat.route){
-            //
+            ChatEmpresa(viewModelEmpresa = ViewModelEmpresa())
         }
     }
 }

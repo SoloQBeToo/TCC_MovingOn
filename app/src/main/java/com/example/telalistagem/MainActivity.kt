@@ -86,7 +86,7 @@ fun InitialSceen() {
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "Você é:",
+                text = "Entrar como:",
                 style = MaterialTheme.typography.h4,
                 color = Color(68, 66, 66, 255),
                 fontWeight = FontWeight.Bold,

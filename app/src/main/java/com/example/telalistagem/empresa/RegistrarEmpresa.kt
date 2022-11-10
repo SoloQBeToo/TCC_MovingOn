@@ -117,7 +117,6 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
         cnpj.length != 18
     }
 
-    val abas = rememberPagerState(pageCount = 2)
     /*if (auth.currentUser != null){
         context.startActivity(Intent(context, InterfaceEmpresa::class.java))
     }*/
@@ -183,15 +182,12 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
 
 
         //Inputs
-        TopAppBar(
-            backgroundColor = Color.White, contentColor = Color.Black
-        ) {
             Card(
                 Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 7.dp)
                     .padding(top = 10.dp)
-                    .height(IntrinsicSize.Min),
+                    .height(360.dp),
                 shape = RoundedCornerShape(15.dp),
                 backgroundColor = Color(230, 230, 233, 255),
                 border = BorderStroke(1.dp, Color.Black)
@@ -323,7 +319,7 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                         ),
                         isError = (!validadeCnpj), //Erro quando a validação do cnpj está errada
                         trailingIcon = {
-                            if ((cnpj.isNotBlank() && (cnpj.length >= 18))) {
+                            if (cnpj.isNotBlank() && (cnpj.length >= 18)) {
                                 IconButton(onClick = { cnpj = "" }) {
                                     Icon(
                                         imageVector = Icons.Filled.Clear,
@@ -389,10 +385,6 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                         }
                     }
                 }
-                /*Tabs(abas = abas)
-
-                TabsContent(abas = abas)
-                 */
             }
             Row(
                 Modifier
@@ -419,7 +411,7 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
 
         }
     }
-}
+
 
 
 
@@ -431,52 +423,6 @@ fun DefaultPreview() {
     }
 }
 
-/*@OptIn(ExperimentalPagerApi::class)
-@Composable
-fun Tabs(abas: PagerState) {
-    val list = listOf(
-        "Dados" to "Dados",
-        "Outros dados" to "Outros dados"
-    )
-    val scope = rememberCoroutineScope()
-
-    TabRow(
-        selectedTabIndex = abas.currentPage,
-        backgroundColor = Color.White,
-        contentColor = Color.Black,
-        indicator = {
-            tabPositions ->  TabRowDefaults.Indicator(
-            modifier = Modifier
-                .pagerTabIndicatorOffset(abas, tabPositions),
-            height = 3.dp,
-            color = Color.Black
-            )
-        }
-
-    ) {
-        list.forEachIndexed{ index, _ ->
-
-            Tab(
-                icon = {
-                    Icon(imageVector = list[index].second, contentDescription = null)
-                },
-                text = {
-                    Text(
-                        text = list[index].first
-                        //color = if ( abas.currentPage == index) Color.Black else
-                    )
-                },
-                selected = abas.currentPage == index,
-                onClick = {
-                    scope.launch {
-                        abas.animateScrollToPage(index)
-                    }
-                }
-            )
-        }
-
-    }
-}*/
 
 
 

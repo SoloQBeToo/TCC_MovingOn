@@ -1,4 +1,4 @@
-package com.example.telalistagem.empresa.telas
+package com.example.telalistagem.cliente.telas
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,16 +15,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
-class EmpresaHome : ComponentActivity() {
+class ClienteCronograma : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeEmpresa()
+            CronogramaCliente()
         }
     }
 }
 @Composable
-fun HomeEmpresa(){
+fun CronogramaCliente(){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +32,7 @@ fun HomeEmpresa(){
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text ="Tela Home Empresa",
+            text ="Tela Cronograma",
             fontSize = 20.sp,
             modifier = Modifier
                 .fillMaxSize(),

@@ -8,4 +8,5 @@ sealed class NavDrawerItemCliente(var route: String, var icon: Int, var title: S
     object Cronograma: NavDrawerItemCliente("cronograma", R.drawable.ic_timeline,"Timeline")
     object Chat: NavDrawerItemCliente("chat", R.drawable.ic_chat,"Chat")
     object Mapa: NavDrawerItemCliente("mapa", R.drawable.ic_map,"Mapa")
+    object Calculadora: NavDrawerItemCliente("calculadora",R.drawable.ic_calc, "Calculadora")
 }
