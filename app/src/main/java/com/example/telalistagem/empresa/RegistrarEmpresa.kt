@@ -9,10 +9,7 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,7 +36,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
@@ -63,6 +62,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import org.checkerframework.checker.units.qual.C
 
 class RegistrarEmpresa : ComponentActivity() {
     private val auth by lazy {Firebase.auth}
@@ -72,7 +72,7 @@ class RegistrarEmpresa : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            RegistrarEmpresaScreen(auth,firestore)
+            RegistrarEmpresaScreen(auth, firestore)
         }
     }
 }
@@ -98,6 +98,24 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
     var cnpj by remember {
         mutableStateOf("")
     }
+    var rua by remember {
+        mutableStateOf("")
+    }
+    var uf by remember {
+        mutableStateOf("")
+    }
+    var complemento by remember {
+        mutableStateOf("")
+    }
+    var numero by remember {
+        mutableStateOf("")
+    }
+    var cep by remember {
+        mutableStateOf("")
+    }
+    var cidade by remember {
+        mutableStateOf("")
+    }
 
     //Configurações Inputs
     val validadeEmail by derivedStateOf {
@@ -114,7 +132,14 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
         mutableStateOf(false)
     }
     val validadeCnpj by derivedStateOf {
-        cnpj.length != 18
+        cnpj.length != 19
+    }
+    val validadeUf by derivedStateOf {
+        uf.length != 3
+
+    }
+    val validadeCep by derivedStateOf {
+        cep.length != 10
     }
 
     /*if (auth.currentUser != null){
@@ -126,21 +151,21 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
         Row( //Parte superior
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 5.dp, bottom = 10.dp)
-                .height(25.dp),
-            verticalAlignment = Alignment.Top,
+                .padding(top = 10.dp, bottom = 10.dp)
+                .height(20.dp),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
             Column(
                 Modifier
                     .width(30.dp),
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.End
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "Moving On",
                     modifier = Modifier
-                        .size(75.dp)
+                        .size(45.dp)
                         .clickable {
                             context.startActivity(
                                 Intent(context, MainActivity::class.java)
@@ -149,11 +174,11 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                 )
             }
         }
-        Column(
+        /*Column(
             Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp)
-                .height(100.dp),
+                .height(75.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -162,17 +187,17 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                 Modifier
                     .fillMaxSize(),
             )
-        }
+        }*/
         Row(
             Modifier
                 .fillMaxWidth()
                 .padding(all = 10.dp)
-                .height(IntrinsicSize.Min),
+                .height(IntrinsicSize.Max),
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
                 text = "Cadastrar",
-                fontSize = 30.sp,
+                fontSize = 25.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
                 fontFamily = FontFamily.Monospace,
@@ -182,154 +207,312 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
 
 
         //Inputs
+        Box(Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 7.dp)
+            .height(IntrinsicSize.Max),) {
             Card(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 7.dp)
-                    .padding(top = 10.dp)
-                    .height(360.dp),
                 shape = RoundedCornerShape(15.dp),
                 backgroundColor = Color(230, 230, 233, 255),
                 border = BorderStroke(1.dp, Color.Black)
             ) {
                 Column(
                     Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                        .height(IntrinsicSize.Min)
                         .padding(all = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    OutlinedTextField(
-                        value = name,
-                        onValueChange = { name = it },
-                        singleLine = true,
-                        maxLines = 1,
-                        label = { Text(text = "Nome:") },
-                        placeholder = { Text(text = "Nome Sobrenome") },
-                        modifier = Modifier.width(350.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    Column {
+                        OutlinedTextField(
+                            value = name,
+                            onValueChange = { name = it },
+                            singleLine = true,
+                            maxLines = 1,
+                            label = { Text(text = "Nome:") },
+                            placeholder = { Text(text = "Nome Sobrenome") },
+                            modifier = Modifier.width(350.dp),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                            )
                         )
-                    )
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text(text = "Email:") },
-                        singleLine = true,
-                        maxLines = 1,
-                        placeholder = { Text(text = "email@email.com") },
-                        modifier = Modifier.width(350.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                        ),
-                        isError = (!validadeEmail) && (email === confirmEmail), //Erro quando a validação do email está errada
-                        trailingIcon = {
-                            if (email.isNotBlank()) {
-                                IconButton(onClick = { email = "" }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Clear,
-                                        contentDescription = "Limpar caixa de texto"
-                                    )
+                    }
+                    Column {
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = { email = it },
+                            label = { Text(text = "Email:") },
+                            singleLine = true,
+                            maxLines = 1,
+                            placeholder = { Text(text = "email@email.com") },
+                            modifier = Modifier.width(350.dp),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Email,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                            ),
+                            isError = (!validadeEmail) && (email === confirmEmail), //Erro quando a validação do email está errada
+                            trailingIcon = {
+                                if (email.isNotBlank()) {
+                                    IconButton(onClick = { email = "" }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Clear,
+                                            contentDescription = "Limpar caixa de texto"
+                                        )
+                                    }
                                 }
                             }
-                        }
-                    )
-                    OutlinedTextField(
-                        value = confirmEmail,
-                        onValueChange = { confirmEmail = it },
-                        label = { Text(text = "Confirmar Email:") },
-                        singleLine = true,
-                        maxLines = 1,
-                        placeholder = { Text(text = "email@email.com") },
-                        modifier = Modifier.width(350.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                        ),
-                        isError = ((!validadeConfirmEmail) && ((email.equals(confirmEmail)))), //Erro quando a validação do email está errada
-                        trailingIcon = {
-                            if (confirmEmail.isNotBlank()) {
-                                IconButton(onClick = { confirmEmail = "" }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Clear,
-                                        contentDescription = "Limpar caixa de texto"
-                                    )
+                        )
+                    }
+                    Column {
+                        OutlinedTextField(
+                            value = confirmEmail,
+                            onValueChange = { confirmEmail = it },
+                            label = { Text(text = "Confirmar Email:") },
+                            singleLine = true,
+                            maxLines = 1,
+                            placeholder = { Text(text = "email@email.com") },
+                            modifier = Modifier.width(350.dp),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Email,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                            ),
+                            isError = ((!validadeConfirmEmail) && ((email.equals(confirmEmail)))), //Erro quando a validação do email está errada
+                            trailingIcon = {
+                                if (confirmEmail.isNotBlank()) {
+                                    IconButton(onClick = { confirmEmail = "" }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Clear,
+                                            contentDescription = "Limpar caixa de texto"
+                                        )
+                                    }
                                 }
                             }
-                        }
-                    )
-
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        label = { Text(text = "Senha:") },
-                        singleLine = true,
-                        maxLines = 1,
-                        placeholder = { Text(text = "Sua senha aqui:") },
-                        modifier = Modifier.width(350.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Next
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                        ),
-                        isError = !validadePassword, //Erro quando a senha não é válida
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                visibilidadeSenha = !visibilidadeSenha
-                            }) { //botão para esconder/mostrar visibibilidade do campo
-                                Icon(
-                                    imageVector = if (visibilidadeSenha) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                    contentDescription = "Exibir ou não senha"
-                                )
-                            }
-                        },
-                        visualTransformation = if (visibilidadeSenha) VisualTransformation.None else PasswordVisualTransformation() //ação de esconder/exibir a senha
-                    )
-
-                    OutlinedTextField(
-                        value = cnpj,
-                        onValueChange = { cnpj = it },
-                        label = { Text(text = "CNPJ:") },
-                        singleLine = true,
-                        maxLines = 1,
-                        placeholder = { Text(text = "XX.XXX.XXX/XXXX-XX") },
-                        modifier = Modifier.width(350.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone =
-                            { focusManager.clearFocus() }
-
-                        ),
-                        isError = (!validadeCnpj), //Erro quando a validação do cnpj está errada
-                        trailingIcon = {
-                            if (cnpj.isNotBlank() && (cnpj.length >= 18)) {
-                                IconButton(onClick = { cnpj = "" }) {
+                        )
+                    }
+                    Column {
+                        OutlinedTextField(
+                            value = password,
+                            onValueChange = { password = it },
+                            label = { Text(text = "Senha:") },
+                            singleLine = true,
+                            maxLines = 1,
+                            placeholder = { Text(text = "Sua senha aqui:") },
+                            modifier = Modifier.width(350.dp),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                            ),
+                            isError = !validadePassword, //Erro quando a senha não é válida
+                            trailingIcon = {
+                                IconButton(onClick = {
+                                    visibilidadeSenha = !visibilidadeSenha
+                                }) { //botão para esconder/mostrar visibibilidade do campo
                                     Icon(
-                                        imageVector = Icons.Filled.Clear,
-                                        contentDescription = "Limpar caixa de texto"
+                                        imageVector = if (visibilidadeSenha) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                        contentDescription = "Exibir ou não senha"
                                     )
                                 }
-                            }
-                        }
-                    )
+                            },
+                            visualTransformation = if (visibilidadeSenha) VisualTransformation.None else PasswordVisualTransformation() //ação de esconder/exibir a senha
+                        )
+                    }
 
+                    Column {
+                        OutlinedTextField(
+                            value = cnpj,
+                            onValueChange = { cnpj = it },
+                            label = { Text(text = "CNPJ:") },
+                            singleLine = true,
+                            maxLines = 1,
+                            placeholder = { Text(text = "XX.XXX.XXX/XXXX-XX") },
+                            modifier = Modifier.width(350.dp),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext =
+                                { focusManager.moveFocus(FocusDirection.Down) }
+
+                            ),
+                            isError = (!validadeCnpj), //Erro quando a validação do cnpj está errada
+                            trailingIcon = {
+                                if (cnpj.isNotBlank() && (cnpj.length >= 19)) {
+                                    IconButton(onClick = { cnpj = "" }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Clear,
+                                            contentDescription = "Limpar caixa de texto"
+                                        )
+                                    }
+                                }
+                            }
+                        )
+                    }
+
+                    Column {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            OutlinedTextField(
+                                value = rua,
+                                onValueChange = { rua = it },
+                                label = { Text(text = "Rua:") },
+                                singleLine = true,
+                                maxLines = 1,
+                                placeholder = { Text(text = "Nome da sua rua aqui") },
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .width(200.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext =
+                                    { focusManager.moveFocus(FocusDirection.Next) }
+                                ),
+                            )
+                            OutlinedTextField(
+                                value = numero,
+                                onValueChange = { numero = it },
+                                label = { Text(text = "Número:") },
+                                singleLine = true,
+                                maxLines = 1,
+                                placeholder = { Text(text = "190") },
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .width(150.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Number,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext =
+                                    { focusManager.moveFocus(FocusDirection.Next) }
+                                ),
+                            )
+                        }
+                    }
+                    Column {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            OutlinedTextField(
+                                value = complemento,
+                                onValueChange = { complemento = it },
+                                label = { Text(text = "Complemento:") },
+                                singleLine = true,
+                                maxLines = 1,
+                                placeholder = { Text(text = "Apto. 22A") },
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .width(165.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext =
+                                    { focusManager.moveFocus(FocusDirection.Left) }
+                                ),
+                            )
+                            OutlinedTextField(
+                                value = cep,
+                                onValueChange = { cep = it },
+                                label = { Text(text = "CEP:") },
+                                singleLine = true,
+                                maxLines = 1,
+                                placeholder = { Text(text = "XXXXX-XXX") },
+                                modifier = Modifier.width(175.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Number,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext =
+                                    { focusManager.moveFocus(FocusDirection.Next) }
+
+                                ),
+                                isError = (!validadeCep), //Erro quando a validação do cnpj está errada
+                                trailingIcon = {
+                                    if (cep.isNotBlank() && (cep.length >= 11)) {
+                                        IconButton(onClick = { cep = "" }) {
+                                            Icon(
+                                                imageVector = Icons.Filled.Clear,
+                                                contentDescription = "Limpar caixa de texto"
+                                            )
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    }
+
+                    Column {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            OutlinedTextField(
+                                value = cidade,
+                                onValueChange = { cidade = it },
+                                label = { Text(text = "Cidade:") },
+                                singleLine = true,
+                                maxLines = 1,
+                                placeholder = { Text(text = "São Paulo") },
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .width(235.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext =
+                                    { focusManager.moveFocus(FocusDirection.Left) }
+                                ),
+                            )
+                            OutlinedTextField(
+                                value = uf,
+                                onValueChange = { uf = it },
+                                label = { Text(text = "UF:") },
+                                singleLine = true,
+                                maxLines = 1,
+                                placeholder = { Text(text = "BA") },
+                                modifier = Modifier.width(175.dp),
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Done
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone =
+                                    { focusManager.clearFocus() }
+
+                                ),
+                                isError = (!validadeUf), //Erro quando a validação do cnpj está errada
+                                trailingIcon = {
+                                    if (uf.isNotBlank() && (uf.length >= 4)) {
+                                        IconButton(onClick = { uf = ""}) {
+                                            Icon(
+                                                imageVector = Icons.Filled.Clear,
+                                                contentDescription = "Limpar caixa de texto"
+                                            )
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    }
                     Row(
                         Modifier
                             .padding(top = 20.dp),
@@ -339,35 +522,40 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                         Button(
                             onClick = {
                                 auth.createUserWithEmailAndPassword(email, password)
-                                    .addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            val user = auth.currentUser?.uid
-                                            val documentReference = firestore.collection("Empresas")
-                                                .document(user.toString())
-                                            val empresa = mutableMapOf<String, String>()
+                                        .addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
+                                                val user = auth.currentUser?.uid
+                                                val documentReference = firestore.collection("Empresas")
+                                                    .document(user.toString())
+                                                val empresa = mutableMapOf<String, String>()
 
-                                            empresa["nome"] = name
-                                            empresa["email"] = email
-                                            empresa["cnpj"] = cnpj
+                                                empresa["nome"] = name
+                                                empresa["email"] = email
+                                                empresa["cnpj"] = cnpj
+                                                empresa["cidade"] = cidade
+                                                empresa["uf"] = uf
+                                                empresa["rua"] = rua
+                                                empresa["numero"] = numero
 
-                                            documentReference.set(empresa).addOnCompleteListener {
-                                                if (it.isSuccessful) {
-                                                    context.startActivity(
-                                                        Intent(
-                                                            context,
-                                                            InterfaceEmpresa::class.java
+
+                                                documentReference.set(empresa).addOnCompleteListener {
+                                                    if (it.isSuccessful) {
+                                                        context.startActivity(
+                                                            Intent(
+                                                                context,
+                                                                InterfaceEmpresa::class.java
+                                                            )
                                                         )
-                                                    )
-                                                } else {
-                                                    Toast.makeText(
-                                                        context,
-                                                        "Erro ao registrar",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
+                                                    } else {
+                                                        Toast.makeText(
+                                                            context,
+                                                            "Erro ao registrar",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
                             },
                             Modifier
                                 .fillMaxWidth(),
@@ -385,32 +573,42 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                         }
                     }
                 }
-            }
-            Row(
-                Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                TextButton(
-                    onClick = { context.startActivity(Intent(context, LoginEmpresa::class.java)) },
 
-                    ) {
-                    Text(
-                        "Já possui conta? Clique aqui para fazer o login!",
-                        Modifier
-                            .padding(start = 200.dp, end = 5.dp),
-                        Color.Black,
-                        fontStyle = FontStyle.Italic,
-                        fontSize = 13.sp,
-                        textAlign = TextAlign.End
-                    )
-                }
             }
+        }
+
+    }
+
+    Row(
+        Modifier
+            .padding(top = 0.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.Top
+    ) {
+        TextButton(
+            onClick = { context.startActivity(Intent(context, LoginEmpresa::class.java)) },
+            border = BorderStroke(2.dp, Color(0, 0, 0, 255)),
+            modifier = Modifier
+                .width(100.dp)
+                .padding(end = 10.dp)
+            ) {
+            Text(
+                "Login",
+                color = Color.Black,
+                fontStyle = FontStyle.Italic,
+                fontSize = 15.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                softWrap = true
+            )
+        }
+    }
 
 
         }
-    }
+
+
 
 
 
@@ -419,7 +617,7 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
 @Composable
 fun DefaultPreview() {
     TelaListagemTheme {
-        RegistrarEmpresaScreen(Firebase.auth, Firebase.firestore)
+        RegistrarEmpresaScreen(auth = FirebaseAuth.getInstance(), firestore = FirebaseFirestore.getInstance())
     }
 }
 

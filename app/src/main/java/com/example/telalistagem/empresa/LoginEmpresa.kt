@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.telalistagem.MainActivity
 import com.example.telalistagem.R
 import com.example.telalistagem.empresa.telas.InterfaceEmpresa
 import com.example.telalistagem.ui.theme.TelaListagemTheme
@@ -80,6 +82,32 @@ fun LoginScreenEmpresa(auth: FirebaseAuth){
 
 
     Column() {
+        Row( //Parte superior
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 5.dp, bottom = 10.dp)
+                .height(20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Column(
+                Modifier
+                    .width(30.dp),
+                horizontalAlignment = Alignment.End
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_back),
+                    contentDescription = "Moving On",
+                    modifier = Modifier
+                        .size(45.dp)
+                        .clickable {
+                            context.startActivity(
+                                Intent(context, RegistrarEmpresa::class.java)
+                            )
+                        }
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(30.dp) .padding(top=20.dp))
         Column(
             Modifier

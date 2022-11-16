@@ -40,6 +40,8 @@
         <activity android:name=".empresa.telas.InterfaceEmpresa" />
         <activity android:name=".cliente.telas.ClienteChat"/>
         <activity android:name=".cliente.telas.ClienteHome"/>
+
+
     </application>
 
 

@@ -9,7 +9,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -22,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -99,6 +99,15 @@ fun ShowLazyList(empresas: MutableList<User>) {
 
 @Composable
 fun CardItem(empresa: User) {
+
+    Text(
+        text = "Clientes Registrados",
+        modifier = Modifier
+            .fillMaxWidth(),
+        textAlign = TextAlign.Center,
+        fontSize = MaterialTheme.typography.h6.fontSize,
+        fontWeight = FontWeight.Bold
+    )
     Spacer(modifier = Modifier.size(15.dp))
     Card(
         Modifier
@@ -118,20 +127,22 @@ fun CardItem(empresa: User) {
                 .background(Color(228, 228, 228, 255))
                 .padding(start = 10.dp, end = 10.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_person),
-                contentDescription = "Icon",
-                modifier = Modifier
-                    .size(60.dp)
-                    .align(Alignment.CenterStart)
-                    .clip(shape = CircleShape)
-                    .border(2.dp, color = Color(185, 179, 179, 255), CircleShape)
-                    .background(Color(202, 196, 196, 116))
-                    .padding(5.dp),
-                colorFilter = ColorFilter.tint(Color(165, 165, 241, 255))
+            Column {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_person),
+                    contentDescription = "Icon",
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clip(shape = CircleShape)
+                        .border(2.dp, color = Color(185, 179, 179, 255), CircleShape)
+                        .background(Color(202, 196, 196, 116))
+                        .padding(5.dp),
+                    colorFilter = ColorFilter.tint(Color(165, 165, 241, 255)),
+                    alignment = Alignment.CenterStart
+                )
+            }
 
-            )
-                empresa.nome?.let {
+                empresa.nome?.let { //cliente
                     Text(
                         text = it,
                         fontSize = 17.sp,
@@ -143,7 +154,7 @@ fun CardItem(empresa: User) {
                         color = Color.Black
                     )
                 }
-                empresa.cnpj?.let {
+                empresa.email?.let { //cliente
                     Text(
                         text = it,
                         fontSize = 15.sp,
