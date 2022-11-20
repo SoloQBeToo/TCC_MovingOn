@@ -216,7 +216,7 @@ fun CardItem(cliente: User) {
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(top = 10.dp, bottom = 5.dp)
-                                .width(80.dp),
+                                .width(200.dp),
                             textAlign = TextAlign.Center,
                             color = Color.Black
                         )
@@ -303,7 +303,7 @@ fun CardItem(cliente: User) {
                                 fontSize = 15.sp,
                                 modifier = Modifier
                                     .width(IntrinsicSize.Max)
-                                    .padding(bottom = 5.dp)
+                                    .padding(bottom = 1.5.dp)
                                 ,
                                 textAlign = TextAlign.Center,
                                 color = Color(82, 54, 97, 255),
@@ -328,7 +328,6 @@ fun CardItem(cliente: User) {
                             lineHeight = 1.em
                         )
                     }
-
                 }
 
 

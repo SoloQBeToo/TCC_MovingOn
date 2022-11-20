@@ -47,6 +47,7 @@ import com.example.telalistagem.InitialSceen
 import com.example.telalistagem.MainActivity
 import com.example.telalistagem.R
 import com.example.telalistagem.cliente.telas.InterfaceCliente
+import com.example.telalistagem.empresa.LoginEmpresa
 import com.example.telalistagem.ui.theme.TelaListagemTheme
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -81,10 +82,10 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
 
 
     //variavéis para os inputs
-    var name by remember{
+    var name by remember {
         mutableStateOf("")
     }
-    var email by remember{
+    var email by remember {
         mutableStateOf("")
     }
     var confirmEmail by remember {
@@ -99,7 +100,8 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
         Patterns.EMAIL_ADDRESS.matcher(email).matches() //Padrão de email para a variável email
     }
     val validadeConfirmEmail by derivedStateOf {
-        Patterns.EMAIL_ADDRESS.matcher(confirmEmail).matches() //Padrão de email para a variável validadeConfirmEmail
+        Patterns.EMAIL_ADDRESS.matcher(confirmEmail)
+            .matches() //Padrão de email para a variável validadeConfirmEmail
     }
     val validadePassword by derivedStateOf {
         password.length >= 8
@@ -115,27 +117,52 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
         Row( //Parte superior
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 5.dp, bottom = 10.dp)
-                .height(25.dp),
-            verticalAlignment = Alignment.Top,
+                .padding(top = 10.dp, bottom = 10.dp)
+                .height(IntrinsicSize.Min),
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
             Column(
                 Modifier
                     .width(30.dp),
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.End
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "Moving On",
                     modifier = Modifier
-                        .size(75.dp)
+                        .size(25.dp)
                         .clickable {
                             context.startActivity(
                                 Intent(context, MainActivity::class.java)
                             )
                         }
                 )
+            }
+            Row(
+                Modifier
+                    .padding(top = 0.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.Top
+            ) {
+                TextButton(
+                    onClick = { context.startActivity(Intent(context, LoginCliente::class.java)) },
+                    border = BorderStroke(2.dp, Color(0, 0, 0, 255)),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .padding(end = 10.dp)
+                ) {
+                    Text(
+                        "Login",
+                        color = Color.Black,
+                        fontStyle = FontStyle.Italic,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center,
+                        maxLines = 2,
+                        softWrap = true
+                    )
+                }
             }
         }
         Column(
@@ -158,7 +185,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                 .padding(all = 10.dp)
                 .height(IntrinsicSize.Min),
             horizontalArrangement = Arrangement.Center
-        ){
+        ) {
             Text(
                 text = "Cadastrar",
                 style = MaterialTheme.typography.h4,
@@ -168,7 +195,6 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                 color = Color(101, 90, 194, 255)
             )
         }
-
 
 
         //Inputs
@@ -193,64 +219,70 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
             ) {
                 OutlinedTextField(
                     value = name,
-                    onValueChange = {name = it},
+                    onValueChange = { name = it },
                     singleLine = true,
                     maxLines = 1,
-                    label = { Text(text = "Nome:")},
-                    placeholder = { Text(text = "Nome Sobrenome")},
+                    label = { Text(text = "Nome:") },
+                    placeholder = { Text(text = "Nome Sobrenome") },
                     modifier = Modifier.width(350.dp),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = {focusManager.moveFocus(FocusDirection.Down)}
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     )
                 )
                 OutlinedTextField(
                     value = email,
-                    onValueChange = {email = it},
-                    label = { Text(text = "Email:")},
+                    onValueChange = { email = it },
+                    label = { Text(text = "Email:") },
                     singleLine = true,
                     maxLines = 1,
-                    placeholder = { Text(text = "email@email.com")},
+                    placeholder = { Text(text = "email@email.com") },
                     modifier = Modifier.width(350.dp),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = {focusManager.moveFocus(FocusDirection.Down)}
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     ),
                     isError = !validadeEmail, //Erro quando a validação do email está errada
                     trailingIcon = {
-                        if(email.isNotBlank()){
+                        if (email.isNotBlank()) {
                             IconButton(onClick = { email = "" }) {
-                                Icon(imageVector= Icons.Filled.Clear, contentDescription = "Limpar caixa de texto")
+                                Icon(
+                                    imageVector = Icons.Filled.Clear,
+                                    contentDescription = "Limpar caixa de texto"
+                                )
                             }
                         }
                     }
                 )
                 OutlinedTextField(
                     value = confirmEmail,
-                    onValueChange = {confirmEmail = it},
-                    label = { Text(text = "Confirmar Email:")},
+                    onValueChange = { confirmEmail = it },
+                    label = { Text(text = "Confirmar Email:") },
                     singleLine = true,
                     maxLines = 1,
-                    placeholder = { Text(text = "email@email.com")},
+                    placeholder = { Text(text = "email@email.com") },
                     modifier = Modifier.width(350.dp),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = {focusManager.moveFocus(FocusDirection.Down)}
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     ),
                     isError = !validadeConfirmEmail, //Erro quando a validação do email está errada
                     trailingIcon = {
-                        if(confirmEmail.isNotBlank()){
+                        if (confirmEmail.isNotBlank()) {
                             IconButton(onClick = { confirmEmail = "" }) {
-                                Icon(imageVector= Icons.Filled.Clear, contentDescription = "Limpar caixa de texto")
+                                Icon(
+                                    imageVector = Icons.Filled.Clear,
+                                    contentDescription = "Limpar caixa de texto"
+                                )
                             }
                         }
                     }
@@ -258,27 +290,31 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
 
                 OutlinedTextField(
                     value = password,
-                    onValueChange = {password = it},
-                    label = { Text(text = "Senha:")},
+                    onValueChange = { password = it },
+                    label = { Text(text = "Senha:") },
                     singleLine = true,
                     maxLines = 1,
-                    placeholder = { Text(text = "Sua senha aqui:")},
+                    placeholder = { Text(text = "Sua senha aqui:") },
                     modifier = Modifier.width(350.dp),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
                     ),
                     keyboardActions = KeyboardActions(
-                        onDone = {focusManager.clearFocus()}
+                        onDone = { focusManager.clearFocus() }
                     ),
                     isError = !validadePassword, //Erro quando a senha não é válida
                     trailingIcon = {
-                        IconButton(onClick = { visibilidadeSenha = !visibilidadeSenha}) { //botão para esconder/mostrar visibibilidade do campo
-                            Icon(imageVector = if(visibilidadeSenha) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                contentDescription = "Exibir ou não senha")
+                        IconButton(onClick = {
+                            visibilidadeSenha = !visibilidadeSenha
+                        }) { //botão para esconder/mostrar visibibilidade do campo
+                            Icon(
+                                imageVector = if (visibilidadeSenha) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                contentDescription = "Exibir ou não senha"
+                            )
                         }
                     },
-                    visualTransformation = if(visibilidadeSenha) VisualTransformation.None else PasswordVisualTransformation() //ação de esconder/exibir a senha
+                    visualTransformation = if (visibilidadeSenha) VisualTransformation.None else PasswordVisualTransformation() //ação de esconder/exibir a senha
                 )
                 Row(
                     Modifier
@@ -286,7 +322,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                     verticalAlignment = Alignment.Bottom,
                     horizontalArrangement = Arrangement.End
                 ) {
-                    Button(
+                    /*Button(
                         onClick = {
 
                             auth.createUserWithEmailAndPassword(email, password)
@@ -328,31 +364,11 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                         Text(
                             text = "Registrar", fontSize = 20.sp, fontFamily = FontFamily.SansSerif
                         )
-                    }
+                    }*/
                 }
             }
         }
-        Row(
-            Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            TextButton(
-                onClick = { context.startActivity(Intent(context, LoginCliente::class.java))},
 
-                ) {
-                Text(
-                    "Já possui conta? Clique aqui para fazer o login!",
-                    Modifier
-                        .padding(start = 200.dp, end = 5.dp),
-                    Color.Black,
-                    fontStyle = FontStyle.Italic,
-                    fontSize = 13.sp,
-                    textAlign = TextAlign.End
-                )
-            }
-        }
 
 
     }

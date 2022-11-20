@@ -1,5 +1,5 @@
 package com.example.telalistagem
-
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Space
@@ -36,21 +36,28 @@ import androidx.compose.ui.unit.sp
 import com.example.telalistagem.cliente.RegistrarCliente
 import com.example.telalistagem.empresa.RegistrarEmpresa
 import com.example.telalistagem.ui.theme.TelaListagemTheme
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
+@OptIn(ExperimentalPermissionsApi::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           InitialSceen()
+            InitialSceen()
+            }
+
         }
     }
-}
+
 
 
 
 @Composable
 fun InitialSceen() {
+
     val context = LocalContext.current
 
 
@@ -80,7 +87,7 @@ fun InitialSceen() {
 
         Column(
             modifier = Modifier
-                .padding(top=  30.dp)
+                .padding(top = 30.dp)
                 .fillMaxWidth()
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
@@ -113,6 +120,7 @@ fun InitialSceen() {
 
                     Button(
                         onClick = {
+
                             context.startActivity(Intent(context, RegistrarCliente::class.java))
                         },
                         Modifier

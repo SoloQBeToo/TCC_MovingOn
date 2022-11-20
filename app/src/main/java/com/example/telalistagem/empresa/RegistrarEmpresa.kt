@@ -536,7 +536,7 @@ fun RegistrarEmpresaScreen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                                                 empresa["uf"] = uf
                                                 empresa["rua"] = rua
                                                 empresa["numero"] = numero
-
+                                                empresa["cep"] = cep
 
                                                 documentReference.set(empresa).addOnCompleteListener {
                                                     if (it.isSuccessful) {

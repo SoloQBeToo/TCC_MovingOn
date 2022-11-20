@@ -1,9 +1,12 @@
 package com.example.telalistagem.cliente.telas
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,14 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.telalistagem.R
 import com.example.telalistagem.cliente.NavDrawerItemCliente
-import com.example.telalistagem.ui.theme.TelaListagemTheme
 import com.example.telalistagem.viewmodel.ViewModelCliente
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -45,6 +47,11 @@ class InterfaceCliente : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val launcher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ){isGranted ->
+                Toast.makeText(this,"Permissão = $isGranted",Toast.LENGTH_SHORT).show()
+            }
                 NavCliente()
         }
     }
@@ -99,8 +106,7 @@ fun DrawerCliente(scope: CoroutineScope, scaffoldState: ScaffoldState, navContro
     val items = listOf(
         NavDrawerItemCliente.Home,
         NavDrawerItemCliente.Cronograma,
-        NavDrawerItemCliente.Chat,
-        NavDrawerItemCliente.Mapa,
+        NavDrawerItemCliente.Contato,
         NavDrawerItemCliente.Calculadora
     )
     Column(
@@ -179,19 +185,26 @@ fun DrawerItemCliente(item: NavDrawerItemCliente, selected: Boolean, onItemClick
 
 @Composable
 fun NavigationCliente(navController: NavHostController){
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ){isGranted ->
+        Toast.makeText(context,"Permissões aceitas",Toast.LENGTH_SHORT).show()
+    }
+
     NavHost(navController, startDestination = NavDrawerItemCliente.Home.route){
         composable(NavDrawerItemCliente.Home.route){
             HomeCliente()
         }
-        composable(NavDrawerItemCliente.Chat.route){
+        composable(NavDrawerItemCliente.Contato.route){
             ChatCliente(ViewModelCliente())
         }
         composable(NavDrawerItemCliente.Calculadora.route){
             CalculadoraCliente()
         }
-        composable(NavDrawerItemCliente.Mapa.route){
+       /* composable(NavDrawerItemCliente.Mapa.route){
             MapaCliente()
-        }
+        }*/
         composable(NavDrawerItemCliente.Cronograma.route){
             CronogramaCliente()
         }

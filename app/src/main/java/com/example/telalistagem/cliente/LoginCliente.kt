@@ -1,11 +1,14 @@
 package com.example.telalistagem.cliente
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -83,12 +86,17 @@ fun LoginScreenCliente(auth: FirebaseAuth) {
         mutableStateOf(false)
     }
 
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ){isGranted ->
+        Toast.makeText(context,"Permissão concedida",Toast.LENGTH_SHORT).show()
+    }
 
     Column() {
         Row( //Parte superior
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 5.dp, bottom = 10.dp)
+                .padding(top = 15.dp, bottom = 10.dp)
                 .height(20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
@@ -228,6 +236,7 @@ fun LoginScreenCliente(auth: FirebaseAuth) {
                 ) {
                     Button(
                         onClick = {
+                            launcher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET))
                         auth.signInWithEmailAndPassword(email,password)
                             .addOnCompleteListener{
                                 if(it.isSuccessful){
