@@ -122,6 +122,7 @@ fun InitialSceen() {
                         onClick = {
 
                             context.startActivity(Intent(context, RegistrarCliente::class.java))
+
                         },
                         Modifier
                             .fillMaxWidth()

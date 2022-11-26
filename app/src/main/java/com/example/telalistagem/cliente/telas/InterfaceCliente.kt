@@ -40,12 +40,16 @@ import androidx.navigation.compose.rememberNavController
 import com.example.telalistagem.R
 import com.example.telalistagem.cliente.NavDrawerItemCliente
 import com.example.telalistagem.viewmodel.ViewModelCliente
+import com.google.android.gms.maps.GoogleMap
+import com.google.maps.android.compose.GoogleMapComposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class InterfaceCliente : ComponentActivity() {
+    private lateinit var map: GoogleMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val launcher = rememberLauncherForActivityResult(
                 ActivityResultContracts.RequestMultiplePermissions()
@@ -107,6 +111,7 @@ fun DrawerCliente(scope: CoroutineScope, scaffoldState: ScaffoldState, navContro
         NavDrawerItemCliente.Home,
         NavDrawerItemCliente.Cronograma,
         NavDrawerItemCliente.Contato,
+        //NavDrawerItemCliente.Mapa,
         NavDrawerItemCliente.Calculadora
     )
     Column(
@@ -186,10 +191,11 @@ fun DrawerItemCliente(item: NavDrawerItemCliente, selected: Boolean, onItemClick
 @Composable
 fun NavigationCliente(navController: NavHostController){
     val context = LocalContext.current
+
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ){isGranted ->
-        Toast.makeText(context,"Permissões aceitas",Toast.LENGTH_SHORT).show()
+        Toast.makeText(context,"Conectado a internet = ${isGranted.values.random()}",Toast.LENGTH_SHORT).show()
     }
 
     NavHost(navController, startDestination = NavDrawerItemCliente.Home.route){
@@ -202,8 +208,10 @@ fun NavigationCliente(navController: NavHostController){
         composable(NavDrawerItemCliente.Calculadora.route){
             CalculadoraCliente()
         }
-       /* composable(NavDrawerItemCliente.Mapa.route){
+        /*composable(NavDrawerItemCliente.Mapa.route){
             MapaCliente()
+            launcher.launch(arrayOf(Manifest.permission.INTERNET, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_NETWORK_STATE))
+
         }*/
         composable(NavDrawerItemCliente.Cronograma.route){
             CronogramaCliente()
@@ -211,6 +219,8 @@ fun NavigationCliente(navController: NavHostController){
 
     }
 }
+
+
 @Preview
 @Composable
 fun NaviClientePrev() {

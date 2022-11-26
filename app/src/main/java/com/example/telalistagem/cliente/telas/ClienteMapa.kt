@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat.apply
 import com.example.telalistagem.cliente.MapaViewModel
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.CameraPosition
@@ -26,8 +28,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.compose.*
 
 
-/*class ClienteMapa : ComponentActivity() {
+class ClienteMapa : ComponentActivity() {
     private val viewMapa by viewModels<MapaViewModel>()
+    private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +82,8 @@ import com.google.maps.android.compose.*
 
 
 @Composable
-fun MapaCliente() {
+fun MapaCliente(){
+
 
 
     Box(
@@ -93,6 +97,7 @@ fun MapaCliente() {
         val cameraPositionState: CameraPositionState = rememberCameraPositionState {
             position = CameraPosition.fromLatLngZoom(latlng, 14f)
         }
+
         GoogleMap(
             modifier = Modifier
                 .matchParentSize(),
@@ -104,72 +109,33 @@ fun MapaCliente() {
                 isMyLocationEnabled = true
             ),
             contentPadding = PaddingValues(30.dp),
-            onMapClick = onMapClick(map = GoogleMap)
-        ).apply {
-            fun onMapClick(map: GoogleMap) {
-                val latLng = LatLng(ACCESS_FINE_LOCATION.toDouble(), ACCESS_FINE_LOCATION.toDouble())
-                map.addMarker(
-                    MarkerOptions()
-                        .position(latLng)
-                        .title("Dale")
-                        .draggable(true)
-                )
-                return this
-            }
+            onMapClick = {
+
+            },
+            onMapLongClick = {
+
+            },
+
+
+        ){
+
         }
-        Marker(
-
-        )
-
-
     }
 
 
 
-    fun marker(latLng: LatLng?) {
-        val marker = MarkerOptions()
-            .position(latLng!!)
-            .title("Local selecionado")
-
-    }
-
-
-    fun onMapClick(map: GoogleMap) {
-        val latLng = LatLng(ACCESS_FINE_LOCATION.toDouble(), ACCESS_FINE_LOCATION.toDouble())
-        map.addMarker(
-            MarkerOptions()
-                .position(latLng)
-                .title("Dale")
-                .draggable(true)
-        )
-    }
 }
 
-    @Composable
-    fun rememberMapaViewLifeCycle() {
-        val context = LocalContext.current
-
-        val mapView = remember {
-            MapView(context).apply { this }
-        }
-    }
 
 
+@Composable
+fun AddMarker(latLng: LatLng){
+    Marker(state = MarkerState(latLng))
+    MarkerOptions()
+        .position(latLng)
+        .draggable(true)
+        .title("Local Selecionado")
+        .snippet
+}
 
 
-
-
-
-/*
-fun onMapReady(googleMap: GoogleMap) {
-    // Add a marker in Sydney, Australia,
-    // and move the map's camera to the same location.
-    val latLng =
-    googleMap.addMarker(
-        MarkerOptions()
-            .position(sydney)
-            .title("Marker in Sydney")
-    )
-    googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-}*/
-*/

@@ -89,7 +89,7 @@ fun LoginScreenCliente(auth: FirebaseAuth) {
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ){isGranted ->
-        Toast.makeText(context,"Permissão concedida",Toast.LENGTH_SHORT).show()
+        Toast.makeText(context,"Conectado a internet = ${isGranted.values.random()}",Toast.LENGTH_SHORT).show()
     }
 
     Column() {
@@ -236,16 +236,30 @@ fun LoginScreenCliente(auth: FirebaseAuth) {
                 ) {
                     Button(
                         onClick = {
-                            launcher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET))
-                        auth.signInWithEmailAndPassword(email,password)
-                            .addOnCompleteListener{
-                                if(it.isSuccessful){
-                                    context.startActivity(Intent(context, InterfaceCliente::class.java))
+
+
+                            auth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
+
+                                        context.startActivity(
+                                            Intent(
+                                                context,
+                                                InterfaceCliente::class.java
+                                            )
+                                        )
+                                        launcher.launch(arrayOf(Manifest.permission.INTERNET, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_NETWORK_STATE))
+                                    }
                                 }
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(context, "Email ou senha errados",Toast.LENGTH_SHORT).show()
-                            }
+
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        context,
+                                        "Email ou senha errados",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
                         },
                         Modifier
                             .fillMaxWidth(),

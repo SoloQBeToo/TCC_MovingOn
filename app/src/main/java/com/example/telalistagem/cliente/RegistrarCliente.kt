@@ -1,5 +1,6 @@
 package com.example.telalistagem.cliente
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.compose.ui.Modifier
@@ -8,7 +9,9 @@ import android.os.PersistableBundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -80,6 +83,13 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
     val context = LocalContext.current //mudança de tela
     val focusManager = LocalFocusManager.current
 
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ){isGranted ->
+        Toast.makeText(context,"Conectado a internet = ${isGranted.values.random()}",Toast.LENGTH_SHORT).show()
+    }
+
+
 
     //variavéis para os inputs
     var name by remember {
@@ -114,6 +124,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
 
     Column(
     ) {
+
         Row( //Parte superior
             modifier = Modifier
                 .fillMaxWidth()
@@ -209,6 +220,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
             backgroundColor = Color(230, 230, 233, 255),
             border = BorderStroke(1.dp, Color.Black)
         ) {
+
             Column(
                 Modifier
                     .fillMaxWidth()
@@ -217,6 +229,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
@@ -322,7 +335,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                     verticalAlignment = Alignment.Bottom,
                     horizontalArrangement = Arrangement.End
                 ) {
-                    /*Button(
+                    Button(
                         onClick = {
 
                             auth.createUserWithEmailAndPassword(email, password)
@@ -344,7 +357,12 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                                                         context,
                                                         InterfaceCliente::class.java
                                                     )
+
+
+
                                                 )
+                                                launcher.launch(arrayOf(Manifest.permission.INTERNET, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_NETWORK_STATE))
+
                                             } else {
                                                 Toast.makeText(
                                                     context,
@@ -364,7 +382,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                         Text(
                             text = "Registrar", fontSize = 20.sp, fontFamily = FontFamily.SansSerif
                         )
-                    }*/
+                    }
                 }
             }
         }

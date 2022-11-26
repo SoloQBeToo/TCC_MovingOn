@@ -149,6 +149,15 @@ fun CardItem(cliente: User) {
     val context = LocalContext.current
     val subject= "Comunicação via aplicativo Moving On"
 
+    // Map point based on address
+    val mapIntent: Intent = Uri.parse(
+        "geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California"
+    ).let { location ->
+        // Or map point based on latitude/longitude
+        // val location: Uri = Uri.parse("geo:37.422219,-122.08364?z=14") // z param is zoom level
+        Intent(Intent.ACTION_VIEW, location)
+    }
+
 
     Card(
         modifier = Modifier
@@ -171,6 +180,7 @@ fun CardItem(cliente: User) {
             Row (
                 Modifier
                     .fillMaxWidth()
+
                     .height(IntrinsicSize.Min),
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.End
@@ -188,6 +198,7 @@ fun CardItem(cliente: User) {
                 modifier = Modifier
                     .width(IntrinsicSize.Max)
                     .fillMaxSize()
+
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_empresa),
@@ -197,7 +208,8 @@ fun CardItem(cliente: User) {
                         .clip(shape = CircleShape)
                         .border(2.dp, color = Color(185, 179, 179, 255), CircleShape)
                         .background(Color(202, 196, 196, 116))
-                        .padding(5.dp),
+                        .padding(5.dp)
+                    ,
                     colorFilter = ColorFilter.tint(Color(165, 165, 241, 255)
                     )
                 )
@@ -221,18 +233,7 @@ fun CardItem(cliente: User) {
                             color = Color.Black
                         )
                     }
-                    /*cliente.email?.let { //empresa
-                        Text(
-                            text = it,
-                            fontSize = 15.sp,
-                            modifier = Modifier
-                                .padding(bottom = 5.dp)
-                                .width(IntrinsicSize.Max)
-                            ,
-                            textAlign = TextAlign.Center,
-                            color = Color(82, 54, 97, 255)
-                        )
-                    }*/
+
                     cliente.cnpj?.let { //empresas
                         Text(
                             text = it,
@@ -255,9 +256,9 @@ fun CardItem(cliente: User) {
                                 fontSize = 15.sp,
                                 modifier = Modifier
                                     .width(IntrinsicSize.Max)
-                                    .padding(bottom = 5.dp, end = 10.dp)
+                                    .padding(bottom = 5.dp, start = 10.dp, end = 4.dp)
                                 ,
-                                textAlign = TextAlign.Center,
+                                textAlign = TextAlign.Start,
                                 color = Color(82, 54, 97, 255),
                                 maxLines = 2,
                                 softWrap = true,
@@ -270,7 +271,7 @@ fun CardItem(cliente: User) {
                                 text = it,
                                 fontSize = 15.sp,
                                 modifier = Modifier
-                                    .width(IntrinsicSize.Max)
+                                    .width(IntrinsicSize.Min)
                                     .padding(bottom = 5.dp)
                                 ,
                                 textAlign = TextAlign.Center,
@@ -288,7 +289,7 @@ fun CardItem(cliente: User) {
                                 fontSize = 15.sp,
                                 modifier = Modifier
                                     .width(IntrinsicSize.Max)
-                                    .padding(bottom = 5.dp, end = 10.dp)
+                                    .padding(bottom = 5.dp, end = 4.dp)
                                 ,
                                 textAlign = TextAlign.Center,
                                 color = Color(82, 54, 97, 255),
@@ -320,6 +321,9 @@ fun CardItem(cliente: User) {
                             modifier = Modifier
                                 .width(IntrinsicSize.Max)
                                 .padding(bottom = 5.dp)
+                                .clickable {
+                                    mapIntent
+                                }
                             ,
                             textAlign = TextAlign.Center,
                             color = Color(82, 54, 97, 255),
@@ -334,7 +338,8 @@ fun CardItem(cliente: User) {
             }//
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .padding(horizontal = 10.dp),
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.Bottom,
 
@@ -354,11 +359,14 @@ fun CardItem(cliente: User) {
                                     Uri.parse(
                                         "mailto:${cliente.email}:?subject="+subject)
                                 )
-
-                            )
+                            ).apply {
+                                Toast.makeText(context,"Envie um email para a empresa",Toast.LENGTH_SHORT).show()
+                            }
 
                         },
+
                         shape = CircleShape
+
                     ) {
                         Text(text = "Contatar")
                     }
@@ -378,8 +386,8 @@ fun CardItemPrev() {
         "email@email.com",
         "01.768.411/0001-94",
         "03693-060",
-        "191",
-        "Rua Girolamo Cardano",
+        "1912",
+        "Algum lugar bem maneiro",
         "SP",
         "São Paulo")
     )
