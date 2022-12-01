@@ -153,7 +153,8 @@ fun LoginScreenEmpresa(auth: FirebaseAuth){
                 .height(IntrinsicSize.Min),
             shape = RoundedCornerShape(15.dp),
             backgroundColor = Color(230, 230, 233, 255),
-            border = BorderStroke(1.dp, Color.Black)
+            border = BorderStroke(1.dp, Color.Black),
+            elevation = 5.dp
         ) {
             Column(
                 Modifier

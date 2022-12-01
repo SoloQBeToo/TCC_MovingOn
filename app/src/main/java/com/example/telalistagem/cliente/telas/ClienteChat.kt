@@ -131,7 +131,6 @@ fun ShowLazyList(empresas: MutableList<User>) {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CardItem(cliente: User) {
 

@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -41,7 +40,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.telalistagem.MainActivity
 import com.example.telalistagem.R
 import com.example.telalistagem.cliente.telas.InterfaceCliente
 import com.example.telalistagem.ui.theme.TelaListagemTheme
@@ -163,7 +161,8 @@ fun LoginScreenCliente(auth: FirebaseAuth) {
                 .height(IntrinsicSize.Min),
             shape = RoundedCornerShape(15.dp),
             backgroundColor = Color(230, 230, 233, 255),
-            border = BorderStroke(1.dp, Color.Black)
+            border = BorderStroke(1.dp, Color.Black),
+            elevation = 5.dp
         ) {
             Column(
                 Modifier

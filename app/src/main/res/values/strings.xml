@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Moving On</string>
+    <string name="iacExplicacao">O Índice de Adiposidade Corporal, mais conhecido como IAC, é um método utilizado para medir a gordura corporal. Para o cálculo desse índice são utilizadas medidas antropométricas, como circunferência do quadril e altura. Para calcular o IAC não é utilizado o peso corporal. A fórmula do IAC é: [Quadril/(altura x √altura)] – 18</string>
+    <string name="iacObs">Geralmente, as mulheres com cerca de 21 a 32% de gordura corporal estão na faixa saudável, aquelas com 32 a 38% estão acima do peso, e aqueles acima de 38% de gordura corporal estão obesos.
+
+A maioria das recomendações diz que os homens com 8 a 20 % de gordura corporal estão na faixa saudável, aqueles com 20 a 25 % de gordura corporal estão acima do peso, e aqueles que têm acima de 25 % de gordura corporal estão obesos.</string>
 </resources>

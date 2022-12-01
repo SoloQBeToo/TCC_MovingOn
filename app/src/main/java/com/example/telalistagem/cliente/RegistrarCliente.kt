@@ -176,20 +176,7 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                 }
             }
         }
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp)
-                .height(100.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.movingon),
-                contentDescription = "Logo",
-                Modifier
-                    .fillMaxSize(),
-            )
-        }
+
         Row(
             Modifier
                 .fillMaxWidth()
@@ -218,7 +205,8 @@ fun RegistrarClienteSceen (auth: FirebaseAuth, firestore: FirebaseFirestore) {
                 .height(380.dp),
             shape = RoundedCornerShape(15.dp),
             backgroundColor = Color(230, 230, 233, 255),
-            border = BorderStroke(1.dp, Color.Black)
+            border = BorderStroke(1.dp, Color.Black),
+            elevation = 5.dp
         ) {
 
             Column(
