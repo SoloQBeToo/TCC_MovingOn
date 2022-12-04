@@ -139,7 +139,7 @@ fun InitialSceen() {
                             modifier = Modifier.padding(end=15.dp)
                         )
                         Text(
-                            text="Estabelecimento/Persoal Trainer", fontSize = 17.sp)
+                            text="Estabelecimento/Personal Trainer", fontSize = 17.sp)
                     }
                 }
 
