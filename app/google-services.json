@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "848140859014",
+    "firebase_url": "https://testeteste-cac2b-default-rtdb.firebaseio.com",
+    "project_id": "testeteste-cac2b",
+    "storage_bucket": "testeteste-cac2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848140859014:android:89e6b4bd08684b25bf4307",
+        "android_client_info": {
+          "package_name": "com.example.movingonteste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848140859014-fosvfs0eu456cpa09d8jenpruuo07tfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnvYCK4UPIJwSYr594uQrIU-FnqNtqn8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848140859014-fosvfs0eu456cpa09d8jenpruuo07tfk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848140859014:android:2cda52eb2f9e5023bf4307",
+        "android_client_info": {
+          "package_name": "com.example.telalistagem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848140859014-fosvfs0eu456cpa09d8jenpruuo07tfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnvYCK4UPIJwSYr594uQrIU-FnqNtqn8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848140859014-fosvfs0eu456cpa09d8jenpruuo07tfk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
